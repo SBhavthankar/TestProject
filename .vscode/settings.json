@@ -1,4 +1,7 @@
 {
-    "snyk.advanced.autoSelectOrganization": true,
-    "snyk.advanced.organization": "ef67796f-76fe-4708-8e6b-ec2fb07d7279"
+    "snyk.advanced.autoSelectOrganization": false,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "sbhavthankar",
+        "projectKey": "SBhavthankar_TestProject"
+    }
 }
