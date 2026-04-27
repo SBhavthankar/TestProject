@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # Enable NuGet version updates for .NET/C# projects
+    - package-ecosystem: "nuget"
+    directory: "/TestProject" # Location of your .sln or .csproj files
+    schedule:
+      interval: "daily" # Check for new versions every day
+    open-pull-requests-limit: 10 # Adjust based on project volume
+    # By NOT defining a 'groups' section, Dependabot creates a 
+    # separate PR for every individual dependency update.
