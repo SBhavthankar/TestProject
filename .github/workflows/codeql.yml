@@ -35,7 +35,7 @@ jobs:
         include:
           # CodeQL supports: 'actions', 'c-cpp', 'csharp', 'go', 'java-kotlin',
           # 'javascript-typescript', 'python', 'ruby', 'rust', 'swift'
-          - language: javascript-typescript
+          - language: actions
             build-mode: none
 
     steps:
