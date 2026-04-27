@@ -2,7 +2,7 @@ version: 2
 updates:
   # Enable NuGet version updates for .NET/C# projects
   - package-ecosystem: "nuget"
-    directory: "/TestProject" # Location of your .sln or .csproj files
+    directory: "/" # Location of your .sln or .csproj files
     schedule:
       interval: weekly
       day: monday
