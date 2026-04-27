@@ -3,5 +3,6 @@
     "sonarlint.connectedMode.project": {
         "connectionId": "sbhavthankar",
         "projectKey": "SBhavthankar_TestProject"
-    }
+    },
+    "clientSecret": "34534534636546"
 }
