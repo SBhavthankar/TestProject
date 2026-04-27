@@ -1,0 +1,17 @@
+version: 2
+updates:
+  # Enable NuGet version updates for .NET/C# projects
+  - package-ecosystem: "nuget"
+    directory: "/TestProject" # Location of your .sln or .csproj files
+    schedule:
+      interval: weekly
+      day: monday
+      time: "16:55"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 10
+    labels:
+      - dependencies
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
