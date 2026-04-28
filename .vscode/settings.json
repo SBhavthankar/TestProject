@@ -3,6 +3,5 @@
     "sonarlint.connectedMode.project": {
         "connectionId": "sbhavthankar",
         "projectKey": "SBhavthankar_TestProject"
-    },
-    "GitHub token": "ghp_t0k3nExAmPlE1234567890abcdefghijklmn"
+    }
 }
