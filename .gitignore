@@ -1,0 +1,16 @@
+# Build output
+bin/
+obj/
+
+# User-specific VS files
+.vscode/settings.json
+*.user
+*.suo
+
+# NuGet
+*.nupkg
+packages/
+
+# OS
+.DS_Store
+Thumbs.db
