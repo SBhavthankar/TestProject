@@ -83,12 +83,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin `
-            /k:"${{ secrets.SONAR_PROJECT_KEY }}" `
-            /o:"${{ secrets.SONAR_HOST_URL }}" `
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
-            /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" `
+            /k:"$env:SONAR_PROJECT_KEY" `
+            /o:"$env:SONAR_HOST_URL" `
+            /d:sonar.token="$env:SONAR_TOKEN" `
+            /d:sonar.host.url="$env:SONAR_HOST_URL" `
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" `
             /d:sonar.cs.vstest.reportsPaths="**/*.trx" `
             /d:sonar.qualitygate.wait=true `
@@ -119,7 +121,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           .\.sonar\scanner\dotnet-sonarscanner end `
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+            /d:sonar.token="$env:SONAR_TOKEN"
 
       # ── 12. Quality Gate check ────────────────────────────────────────────
       - name: SonarQube Quality Gate check
@@ -163,3 +165,27 @@ jobs:
                     '**Quality Gate:** ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}\n\n' +
                     'View full report: ${{ secrets.SONAR_HOST_URL }}/dashboard?id=${{ secrets.SONAR_PROJECT_KEY }}'
             })
+
+  summary:
+    name: Post PR Summary
+    runs-on: ubuntu-latest
+    needs: [sonarqube-sast-csharp]
+    if: always() && github.event_name == 'pull_request'
+
+    steps:
+      - name: Comment PR with security summary
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const sast = '${{ needs.sonarqube-sast-csharp.result }}';
+            const icon = r => r === 'success' ? '✅' : r === 'skipped' ? '⏭️' : '❌';
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## SonarQube Security Suite Summary\n\n` +
+                    `| Check | Status |\n` +
+                    `|---|---|\n` +
+                    `| SAST (Static Analysis) | ${icon(sast)} ${sast} |\n\n` +
+                    `View full dashboard: ${{ secrets.SONAR_HOST_URL }}/dashboard?id=${{ secrets.SONAR_PROJECT_KEY }}`
+            });
