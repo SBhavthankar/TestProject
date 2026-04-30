@@ -71,6 +71,7 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner `
+            --version 9.0.2 `
             --tool-path .\.sonar\scanner
 
       # ── 7. Restore NuGet dependencies ─────────────────────────────────────
@@ -91,6 +92,7 @@ jobs:
             /o:"$env:SONAR_ORGANIZATION" `
             /d:sonar.token="$env:SONAR_TOKEN" `
             /d:sonar.host.url="https://sonarcloud.io" `
+            /d:sonar.scanner.apiBaseUrl="https://api.sonarcloud.io" `
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" `
             /d:sonar.cs.vstest.reportsPaths="**/*.trx" `
             /d:sonar.qualitygate.wait=true `
