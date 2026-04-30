@@ -89,7 +89,7 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin `
             /k:"$env:SONAR_PROJECT_KEY" `
-            /o:"$env:SONAR_ORGANIZATION" `
+            /o:"sbhavthankar" `
             /d:sonar.token="$env:SONAR_TOKEN" `
             /d:sonar.host.url="https://sonarcloud.io" `
             /d:sonar.scanner.apiBaseUrl="https://api.sonarcloud.io" `
